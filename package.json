@@ -9,7 +9,8 @@
     },
     "main": "main.js",
     "scripts": {
-        "prestart": "tsc main.ts",
+        "build": "tsc main.ts",
+        "prestart": "npm run build",
         "start": "node main.js"
     },
     "devDependencies": {
