@@ -1,0 +1,18 @@
+{
+    "name": "sandbox1",
+    "version": "0.0.1",
+    "private": true,
+    "description": "for study TypeScript",
+    "author": {
+        "email": "nishimoto.satoshi@opst.co.jp",
+        "name": "西本 聡"
+    },
+    "main": "main.js",
+    "scripts": {
+        "prestart": "tsc main.ts",
+        "start": "node main.js"
+    },
+    "devDependencies": {
+        "typescript": "^3.7.4"
+    }
+}
