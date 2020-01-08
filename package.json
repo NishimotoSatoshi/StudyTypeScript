@@ -7,11 +7,11 @@
         "email": "nishimoto.satoshi@opst.co.jp",
         "name": "西本 聡"
     },
-    "main": "main.js",
+    "main": "build/main.js",
     "scripts": {
-        "build": "tsc main.ts",
+        "build": "tsc",
         "prestart": "npm run build",
-        "start": "node main.js"
+        "start": "node build/main.js"
     },
     "devDependencies": {
         "typescript": "^3.7.4"
