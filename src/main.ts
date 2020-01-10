@@ -1,19 +1,14 @@
-class Student {
-    fullName: string;
-    constructor(public firstName: string, public middleInitial: string, public lastName: string) {
-        this.fullName = firstName + " " + middleInitial + " " + lastName;
-    }
-}
+import * as readline from 'readline'
 
-interface Person {
-    firstName: string;
-    lastName: string;
-}
+const readStdin = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-function greeter(person: Person) {
-    return "Hello, " + person.firstName + " " + person.lastName;
-}
+const question = (prompt: string) => new Promise(
+    resolve => readStdin.question(prompt, answer => resolve(answer))
+);
 
-const user = new Student("Jane", "M.", "User");
-const greeting = greeter(user);
-console.log(greeting);
+question('数字を入力してください。')
+    .then(answer => console.log(answer))
+    .finally(() => readStdin.close());
