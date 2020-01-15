@@ -8,6 +8,7 @@
         "name": "西本 聡"
     },
     "scripts": {
+        "main": "ts-node src/main.ts",
         "build": "tsc",
         "restart": "node build/main.js",
         "prestart": "npm run build",
