@@ -1,25 +1,8 @@
 import * as readline from 'readline'
+import { Library } from './library';
 
 /** 正解の桁数。 */
 const ANSWER_LENGTH = 3;
-
-/**
- * 正解を作成する。
- */
-function createAnswers(): number[] {
-    const answers: number[] = [];
-
-    for (let i = 0; i < ANSWER_LENGTH; i++) {
-        answers[i] = i + 1;
-    }
-
-    for (let i = 0; i < ANSWER_LENGTH; i++) {
-        const swapTo = Math.floor(Math.random() * ANSWER_LENGTH);
-        [answers[i], answers[swapTo]] = [answers[swapTo], answers[i]];
-    }
-
-    return answers;
-}
 
 /**
  * 回答を要求する。
@@ -97,7 +80,7 @@ function main() {
         output: process.stdout
     });
 
-    const answers = createAnswers();
+    const answers = Library.shuffle(Library.createNumbers(1, ANSWER_LENGTH));
 
     console.log(answers);
 
