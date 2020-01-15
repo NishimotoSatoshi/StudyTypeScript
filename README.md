@@ -17,6 +17,7 @@ Nord.js が必要です。
 ## npm スクリプトの説明
 
 - npm run
+    - main: トランスパイルせずに `src/main.js` を実行する。
     - build: トランスパイルを行う。
     - start: トランスパイルを行った後、`build/main.js` を実行する。
     - restart: `build/main.js` を実行する。
