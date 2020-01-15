@@ -32,9 +32,9 @@ function prompt(readline: readline.Interface): Promise<number[]> {
     )
     .then(input => {
         if (input.length !== ANSWER_LENGTH) {
-            throw new Error(`入力の個数が異なります。`);
+            throw `入力の個数が異なります。`;
         } else if (!/^\d+$/.test(input)) {
-            throw new Error(`数字ではない文字が入力されました。`);
+            throw `数字ではない文字が入力されました。`;
         }
 
         const inputs: number[] = [];
@@ -76,9 +76,13 @@ function doTurn(readline: readline.Interface, answers: number[]): Promise<void> 
                     return doTurn(readline, answers);
                 }
             },
-            (reason: Error) => {
-                console.log(`* ${reason.message}`);
-                return doTurn(readline, answers);
+            (reason: string | Error) => {
+                if (reason instanceof Error) {
+                    throw reason;
+                } else {
+                    console.log(`* ${reason}`);
+                    return doTurn(readline, answers);
+                }
             }
         )
         .finally(() => readline.close());
