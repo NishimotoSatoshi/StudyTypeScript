@@ -1,5 +1,5 @@
 
-export const Library = {
+export const Commons = {
     createNumbers: (min: number, max: number) => {
         const result: number[] = [];
 
