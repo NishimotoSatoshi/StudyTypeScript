@@ -10,6 +10,15 @@ export class Conversation<T> {
     /** 入力時に表示する文字列。 */
     public query: string = '>';
 
+    /** オプション。 */
+    public options: readline.ReadLineOptions = {
+        input: process.stdin,
+        output: process.stdout
+    };
+
+    /** 結果。 */
+    private result: T | null = null;
+
     /**
      * コンストラクタ。
      * 
@@ -28,18 +37,15 @@ export class Conversation<T> {
      * 入出力に用いるオブジェクトを生成する。
      */
     createReadline(): readline.Interface {
-        return readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
+        return readline.createInterface(this.options);
     }
 
     /**
      * 入力を開始する。
      */
-    start(): Promise<void> {
+    start(): Promise<T|null> {
         const io = this.createReadline();
-        return this.process(io);
+        return this.process(io).then(() => this.result);
     }
 
     /**
@@ -48,8 +54,13 @@ export class Conversation<T> {
      * @param io 入出力に用いるオブジェクト
      */
     process(io: readline.Interface): Promise<void> {
+        this.result = null;
+
         return this.prompt(io)
-            .then(input => this.parser(input))
+            .then(input => {
+                this.result = this.parser(input);
+                return this.result;
+            })
             .then(value => this.consumer(value))
             .catch(reason => this.catcher(reason))
             .then(repeat => {
