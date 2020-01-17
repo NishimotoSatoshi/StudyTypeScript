@@ -1,5 +1,10 @@
 
+/** 共通ライブラリ。 */
 export const Commons = {
+
+    /**
+     * 連続する数値の配列を生成する。
+     */
     createNumbers: (min: number, max: number) => {
         const result: number[] = [];
 
@@ -10,6 +15,9 @@ export const Commons = {
         return result;
     },
 
+    /**
+     * 配列をコピーしてシャッフルする。
+     */
     shuffle: <T>(target: T[]) => {
         const result: T[] = target.slice();
 

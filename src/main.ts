@@ -1,4 +1,3 @@
-import * as readline from 'readline'
 import { Commons } from './commons'
 import { Conversation } from './conversation'
 
@@ -41,30 +40,10 @@ function main() {
         return hits !== ANSWER_LENGTH;
     }
 
-    const catcher = (reason: any) => {
-        if (reason instanceof Error) {
-            console.error(reason);
-            return false;
-        } else {
-            console.log(`* ${reason}`);
-            return true;
-        }
-    }
-
-    const conversation = new Conversation<number[]>(
-        `1から${ANSWER_LENGTH}までの数字を全て入力してください。>`,
-        parser,
-        consumer,
-        catcher
-    );
-
-    const io = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
     console.log(answers);
-    conversation.start(io);
+    const conversation = new Conversation<number[]>(parser, consumer);
+    conversation.query = `1から${ANSWER_LENGTH}までの数字を全て入力してください。>`;
+    conversation.start();
 }
 
 main();
