@@ -8,7 +8,7 @@ const ANSWER_LENGTH = 3;
  * メイン。
  */
 function main() {
-    const answers = Commons.shuffle(Commons.createNumbers(1, ANSWER_LENGTH));
+    const answers = Commons.createNumberArray(1, ANSWER_LENGTH, true);
 
     const parser = (input: string) => {
         if (/\D/.test(input)) {

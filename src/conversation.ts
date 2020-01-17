@@ -1,5 +1,15 @@
 import * as readline from 'readline'
 
+const DEFAULT_CATCHER: (reason: any) => boolean = reason => {
+    if (reason instanceof Error) {
+        console.error(reason);
+        return false;
+    } else {
+        console.log(`* ${reason}`);
+        return true;
+    }
+}
+
 /**
  * 期待する入力を受け取るまで、入力を繰り返す。
  * 
@@ -24,12 +34,17 @@ export class Conversation<T> {
      * 
      * consumer が true を返却するまで、入力が繰り返される。
      * 
+     * parser または consumer で例外が発生した場合、
+     * それが Error オブジェクトの場合は入力が中断される。
+     * Error オブジェクト出ない場合は、コンソールに出力され、再入力が行われる。
+     * 
      * @param parser 入力された文字列をパースする関数
      * @param consumer パースした値を受け取る関数
      */
     constructor(
         private parser: (input: string) => T,
         private consumer: (value: T) => boolean,
+        private catcher: (reason: any) => boolean = DEFAULT_CATCHER
     ) {
     }
 
@@ -80,23 +95,5 @@ export class Conversation<T> {
         return new Promise<string>(
             resolve => io.question(this.query, input => resolve(input))
         );
-    }
-
-    /**
-     * 例外を処理する。
-     * 
-     * 例外が Error オブジェクトの場合は、エラー出力して入力を中断する。
-     * 例外が Error オブジェクトでない場合は、標準出力して入力を繰り返す。
-     * 
-     * @param reason 例外
-     */
-    catcher(reason: any): boolean {
-        if (reason instanceof Error) {
-            console.error(reason);
-            return false;
-        } else {
-            console.log(`* ${reason}`);
-            return true;
-        }
     }
 }

@@ -3,16 +3,20 @@
 export const Commons = {
 
     /**
-     * 連続する数値の配列を生成する。
+     * 数値の配列を生成する。
      */
-    createNumbers: (min: number, max: number) => {
+    createNumberArray: (min: number, max: number, shuffle: boolean = false) => {
         const result: number[] = [];
 
         for (let i = 0; i < max - min + 1; i++) {
             result.push(i + min);
         }
 
-        return result;
+        if (shuffle) {
+            return Commons.shuffle(result);
+        } else {
+            return result;
+        }
     },
 
     /**
