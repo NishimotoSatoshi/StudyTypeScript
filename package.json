@@ -8,13 +8,11 @@
         "name": "西本 聡"
     },
     "scripts": {
-        "main": "ts-node src/main.ts",
+        "mastermind": "ts-node src/mastermind.ts",
+        "poker": "ts-node src/poker.ts",
         "build:delete": "del-cli \"build/**\"",
         "build:compile": "tsc",
-        "build": "run-s build:delete build:compile",
-        "restart": "node build/main.js",
-        "prestart": "npm run build",
-        "start": "npm run restart"
+        "build": "run-s build:delete build:compile"
     },
     "dependencies": {
         "@types/node": "^13.1.6"

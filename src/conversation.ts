@@ -26,6 +26,9 @@ export class Conversation<T> {
         output: process.stdout
     };
 
+    public setupper: (result: T | null) => void = () => {}
+    public catcher: (reason: any) => boolean = DEFAULT_CATCHER;
+
     /** 結果。 */
     private result: T | null = null;
 
@@ -44,7 +47,6 @@ export class Conversation<T> {
     constructor(
         private parser: (input: string) => T,
         private consumer: (value: T) => boolean,
-        private catcher: (reason: any) => boolean = DEFAULT_CATCHER
     ) {
     }
 
@@ -60,7 +62,10 @@ export class Conversation<T> {
      */
     start(): Promise<T|null> {
         const io = this.createReadline();
-        return this.process(io).then(() => this.result);
+
+        return this.process(io)
+            .then(() => this.result)
+            .finally(() => io.close());
     }
 
     /**
@@ -78,12 +83,11 @@ export class Conversation<T> {
             })
             .then(value => this.consumer(value))
             .catch(reason => this.catcher(reason))
-            .then(repeat => {
-                if (repeat) {
+            .then(again => {
+                if (again) {
                     return this.process(io);
                 }
-            })
-            .finally(() => io.close());
+            });
     }
 
     /**
@@ -92,6 +96,8 @@ export class Conversation<T> {
      * @param io 入出力に用いるオブジェクト
      */
     prompt(io: readline.Interface): Promise<string> {
+        this.setupper(this.result);
+
         return new Promise<string>(
             resolve => io.question(this.query, input => resolve(input))
         );
