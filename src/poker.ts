@@ -48,10 +48,18 @@ function checkStrait(result: ParseResult, hand: Trump.Card[]): void {
     sortByNum.sort((a, b) => a.num - b.num);
 
     if (sortByNum[0].num === 1) {
-        if (sortByNum[1].num === 2 && sortByNum[2].num === 3 && sortByNum[3].num === 4 && sortByNum[4].num === 5) {
+        if (sortByNum[1].num === 2
+            && sortByNum[2].num === 3
+            && sortByNum[3].num === 4
+            && sortByNum[4].num === 5) {
+
             result.strait = true;
             return;
-        } else if (sortByNum[1].num === 10 && sortByNum[2].num === 11 && sortByNum[3].num === 12 && sortByNum[4].num === 13) {
+        } else if (sortByNum[1].num === 10
+            && sortByNum[2].num === 11
+            && sortByNum[3].num === 12
+            && sortByNum[4].num === 13) {
+
             result.strait = true;
             result.hiAce = true;
             return;
@@ -68,7 +76,14 @@ function checkStrait(result: ParseResult, hand: Trump.Card[]): void {
 }
 
 function checkFlash(result: ParseResult): void {
-    for (const suit of [Trump.Suit.SPADE, Trump.Suit.HEART, Trump.Suit.DIAMOND, Trump.Suit.CLUB]) {
+    const suits = [
+        Trump.Suit.SPADE,
+        Trump.Suit.HEART,
+        Trump.Suit.DIAMOND,
+        Trump.Suit.CLUB
+    ];
+
+    for (const suit of suits) {
         if (result.suits[suit] === 5) {
             result.flash = true;
             return;

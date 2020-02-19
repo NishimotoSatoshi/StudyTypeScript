@@ -1,11 +1,11 @@
 
 /** 共通ライブラリ。 */
-export const Commons = {
+export namespace Commons {
 
     /**
      * 数値の配列を生成する。
      */
-    createNumberArray: (min: number, max: number, shuffle: boolean = false) => {
+    export function createNumberArray(min: number, max: number, shuffle: boolean = false): number[] {
         const result: number[] = [];
 
         for (let i = 0; i < max - min + 1; i++) {
@@ -17,13 +17,13 @@ export const Commons = {
         } else {
             return result;
         }
-    },
+    }
 
     /**
      * 配列をコピーしてシャッフルする。
      */
-    shuffle: <T>(target: T[]) => {
-        const result: T[] = target.slice();
+    export function shuffle<T>(target: T[]): T[] {
+        const result: T[] = target.concat();
 
         for (let i = 0; i < result.length; i++) {
             const swapTo = Math.floor(Math.random() * result.length);

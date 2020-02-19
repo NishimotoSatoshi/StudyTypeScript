@@ -1,6 +1,6 @@
 import * as readline from 'readline'
 
-const DEFAULT_CATCHER: (reason: any) => boolean = reason => {
+const DEFAULT_CATCHER = (reason: any) => {
     if (reason instanceof Error) {
         console.error(reason);
         return false;
@@ -98,7 +98,7 @@ export class Conversation<T> {
     prompt(io: readline.Interface): Promise<string> {
         this.setupper(this.result);
 
-        return new Promise<string>(
+        return new Promise(
             resolve => io.question(this.query, input => resolve(input))
         );
     }
